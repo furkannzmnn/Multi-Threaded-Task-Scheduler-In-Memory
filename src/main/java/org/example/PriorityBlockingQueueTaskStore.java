@@ -17,12 +17,18 @@ public class PriorityBlockingQueueTaskStore implements TaskStore<ScheduledTask> 
 
     @Override
     public void add(ScheduledTask task) {
-        taskQueue.offer(task);
+        if (tasks.add(task)) {
+            taskQueue.add(task);
+        }
     }
 
     @Override
     public ScheduledTask poll() {
-        return taskQueue.poll();
+        ScheduledTask task = taskQueue.poll();
+        if (task != null) {
+            tasks.remove(task);
+        }
+        return task;
     }
 
     @Override
@@ -32,7 +38,8 @@ public class PriorityBlockingQueueTaskStore implements TaskStore<ScheduledTask> 
 
     @Override
     public ScheduledTask peek() {
-        return taskQueue.peek();    }
+        return taskQueue.peek();
+    }
 
     @Override
     public boolean remove(ScheduledTask task) {

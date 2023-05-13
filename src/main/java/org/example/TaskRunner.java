@@ -1,6 +1,6 @@
 package org.example;
 
-public class TaskRunner implements Runnable{
+public class TaskRunner implements Runnable {
     private final TaskStore<ScheduledTask> taskStore;
     private boolean isRunning = true;
 
@@ -12,13 +12,18 @@ public class TaskRunner implements Runnable{
     public void run() {
         while (isRunning) {
             ScheduledTask scheduledTask = taskStore.poll();
-            if (scheduledTask != null) {
-                scheduledTask.execute();
-                if (scheduledTask.isRecurring()) {
-                    taskStore.add(scheduledTask.nextScheduledTask());
+            long nextExecutionTime = System.currentTimeMillis() +  scheduledTask.getNextExecutionTime();
+            long currentTime = System.currentTimeMillis();
+            if (nextExecutionTime > currentTime) {
+                try {
+                    Thread.sleep(nextExecutionTime - currentTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            }else {
-                break;
+            }
+            scheduledTask.execute();
+            if (scheduledTask.isRecurring()) {
+                taskStore.add(scheduledTask.nextScheduledTask());
             }
         }
     }

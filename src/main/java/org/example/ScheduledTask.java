@@ -6,8 +6,6 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class ScheduledTask {
     protected final ExecutionContext executionContext;
-    private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-
     public ScheduledTask(ExecutionContext executionContext) {
         this.executionContext = executionContext;
     }

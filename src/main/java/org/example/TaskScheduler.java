@@ -18,12 +18,4 @@ public class TaskScheduler {
             threads.add(thread);
         }
     }
-
-    public void stop() {
-        threads.forEach(t -> ((TaskRunner) t).stop());
-    }
-
-    public void start() {
-        threads.forEach(t -> ((TaskRunner) t).run());
-    }
 }
