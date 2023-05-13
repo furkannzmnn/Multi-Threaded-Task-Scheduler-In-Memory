@@ -1,15 +1,7 @@
 package org.example;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Comparator;
-
-import static javax.print.attribute.standard.MediaSizeName.A;
-
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args){
        run();
     }
 
